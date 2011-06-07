@@ -19,9 +19,17 @@ class Receiver
     @_server.listen @port
 
   _upload: (req, res) ->
+    req.setEncoding('binary')
+    req.content = ''
+
     req.addListener 'data', (data) =>
+      req.content += data
+
+    req.addListener 'end', (data) =>
       filename = new Date().getTime()
-      @images[filename] = data
+      buf = new Buffer(req.content.length)
+      buf.write(req.content, 0, 'binary')
+      @images[filename] = buf
       @._delete_oldest_image() if _.size(@images) > @limit
       res.end("http://#{req.headers.host}/#{filename}")
 
