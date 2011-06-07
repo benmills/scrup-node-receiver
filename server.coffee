@@ -11,7 +11,6 @@ class Receiver
 
     @port = 3000
     @limit = 2
-    @url = 'http://localhost:3000'
     @logging = false
     @images = {}
 
@@ -24,7 +23,7 @@ class Receiver
       filename = new Date().getTime()
       @images[filename] = data
       @._delete_oldest_image() if _.size(@images) > @limit
-      res.end("#{@url}/#{filename}")
+      res.end("http://#{req.headers.host}/#{filename}")
 
   _display: (req, res) ->
     filename = req.url.substr(1)
