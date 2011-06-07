@@ -11,7 +11,7 @@ Heroku Install
 You will need to use the new heroku cedar stack to use scrup-node-receiver.
 
 1. First create the heroku app, `heroku create --stack cedar`
-2. Push the code to the app, `heroku create --stack cedar`
+2. Push the code to the app, `git push heroku master`
 3. Scale the web process, `heroku ps:scale web=1`
 
 Now the heroku app should be deployed. Now you just need to take the URL that was returned when you created the heroku app to configure scrup.
