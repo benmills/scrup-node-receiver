@@ -1,0 +1,17 @@
+Node Receiver for Scrup
+========================
+
+This is a simple node server that recieves and saves images from [scrup](https://github.com/rsms/scrup), a OS X program that lets you save screenshots to a server and puts the image url in your clipboard.
+
+The special part is that scrup-node-receiver doesn't write the images to disk, it holds the last 30 images in memory and as you go over that limit it drops the oldest image. Also scrup-node-receiver is ready to be deployed to [heroku](http://heroku.com) for ease of use.
+
+Heroku Install
+---------------------
+
+You will need to use the new heroku cedar stack to use scrup-node-receiver.
+
+1. First create the heroku app, `heroku create --stack cedar`
+2. Push the code to the app, `heroku create --stack cedar`
+3. Scale the web process, 'heroku ps:scale web=1'
+
+Now the heroku app should be deployed. Now you just need to take the URL that was returned when you created the heroku app to configure scrup.

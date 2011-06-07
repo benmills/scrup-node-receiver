@@ -2,30 +2,28 @@ http = require 'http'
 _ = require 'underscore'
 
 class Receiver
-  constructor: ->
+  constructor: (args) ->
     @_server = http.createServer (req, res) =>
       if req.method is 'POST'
         @._upload req, res
       else
         @._display req, res
 
-    @port = 3000
-    @limit = 2
-    @logging = false
+    @port = args.port || 3000
+    @limit = args.limit || 2
+    @logging = args.logging || false
     @images = {}
+    @start()
 
   start: ->
-    _port = process.env.PORT || @port
-    @._log "=> Receiver started on port #{_port} with a limit of #{@limit}"
-    @_server.listen _port
+    @._log "=> Receiver started on port #{@port} with a limit of #{@limit}"
+    @_server.listen @port
 
   _upload: (req, res) ->
     req.setEncoding('binary')
-    req.content = ''
+    req.content = ""
 
-    req.addListener 'data', (data) =>
-      req.content += data
-
+    req.addListener 'data', (data) -> req.content += data
     req.addListener 'end', (data) =>
       filename = new Date().getTime()
       buf = new Buffer(req.content.length)
@@ -50,11 +48,6 @@ class Receiver
   _log: (msg) ->
     console.log "=> #{msg}" if @logging
 
-  @config: (configs) ->
-    recv = new Receiver()
-    configs.call(recv)
-    recv.start()
-
-Receiver.config ->
-  @port = 80
-  @limit = 30
+new Receiver
+  port: process.env.PORT || 3000
+  limit: 30
