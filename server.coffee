@@ -48,5 +48,5 @@ class Receiver
     recv.start()
 
 Receiver.config ->
-  @port = 3000
+  @port = 80
   @limit = 30
