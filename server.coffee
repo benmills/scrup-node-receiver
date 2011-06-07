@@ -39,8 +39,8 @@ class Receiver
       res.writeHead(200, {'Content-Type': 'image/png'});
       res.end(img)
     else 
-      res.writeHead(404);
-      res.end()
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.end('No Image')
 
   _delete_oldest_image: ->
       @._log "=> Removing Oldest Image"
