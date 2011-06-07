@@ -15,8 +15,9 @@ class Receiver
     @images = {}
 
   start: ->
-    @._log "=> Receiver started on port #{@port} with a limit of #{@limit}"
-    @_server.listen @port
+    _port = process.env.PORT || @port
+    @._log "=> Receiver started on port #{_port} with a limit of #{@limit}"
+    @_server.listen _port
 
   _upload: (req, res) ->
     req.setEncoding('binary')
